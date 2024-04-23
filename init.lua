@@ -163,6 +163,7 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
 vim.opt.isfname:append '@-@'
+vim.opt.wrap = false
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -269,6 +270,7 @@ require('lazy').setup({
   --
   --  This is equivalent to:
   --    require('Comment').setup({})
+  { 'kalvinpearce/ShaderHighlight', opts = {}, config = function() end },
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
@@ -583,6 +585,14 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
+        -- slangd = {
+        --   settings = {
+        --     cmd = { 'slangd' },
+        --     filetypes = { 'hlsl', 'shaderslang' },
+        --     root_dir = { vim.util.find_git_ancestor },
+        --     single_file_support = { true },
+        --   },
+        -- },
 
         lua_ls = {
           -- cmd = {...},
