@@ -703,9 +703,16 @@ require('lazy').setup({
   {
     'rebelot/kanagawa.nvim',
     priority = 1000,
-    init = function()
-      vim.cmd.colorscheme 'kanagawa'
-    end,
+    -- init = function()
+    --   vim.cmd.colorscheme 'kanagawa'
+    -- end,
+    opts = {
+      transparent = true,
+      styles = {
+        sidebars = 'transparent',
+        floats = 'transparent',
+      },
+    },
   },
   {
     'folke/tokyonight.nvim',
@@ -713,10 +720,15 @@ require('lazy').setup({
   {
     'sainnhe/gruvbox-material',
     lazy = false,
+    init = function()
+      vim.cmd.colorscheme 'gruvbox-material'
+    end,
     config = function()
       -- Optionally configure and load the colorscheme
       -- directly inside the plugin declaration.
       vim.g.gruvbox_material_enable_italic = true
+      vim.g.gruvbox_material_transparent_background = 1
+      vim.g.gruvbox_material_background = 'hard'
     end,
   },
   {
