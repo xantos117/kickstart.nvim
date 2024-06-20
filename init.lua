@@ -722,13 +722,18 @@ require('lazy').setup({
     lazy = false,
     init = function()
       vim.cmd.colorscheme 'gruvbox-material'
+      vim.g.gruvbox_material_enable_italic = 0
+      vim.g.gruvbox_material_transparent_background = 1
+      vim.g.gruvbox_material_background = 'hard'
+      vim.g.gruvbox_material_disable_italic_comment = 1
     end,
     config = function()
       -- Optionally configure and load the colorscheme
       -- directly inside the plugin declaration.
-      vim.g.gruvbox_material_enable_italic = true
+      vim.g.gruvbox_material_enable_italic = 0
       vim.g.gruvbox_material_transparent_background = 1
       vim.g.gruvbox_material_background = 'hard'
+      vim.g.gruvbox_material_disable_italic_comment = 1
     end,
   },
   {
@@ -737,7 +742,7 @@ require('lazy').setup({
     config = function()
       -- Optionally configure and load the colorscheme
       -- directly inside the plugin declaration.
-      vim.g.everforest_enable_italic = true
+      vim.g.everforest_enable_italic = false
       vim.g.everforest_background = 'hard'
       -- vim.cmd.colorscheme 'everforest'
     end,
@@ -787,7 +792,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'cpp', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
