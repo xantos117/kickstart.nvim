@@ -493,7 +493,11 @@ require('lazy').setup({
       local servers = {
         clangd = {
           keys = {
-            { '<leader>ch', '<cmd>ClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' },
+            {
+              '<leader>ch',
+              '<cmd>ClangdSwitchSourceHeader<CR>',
+              desc = 'Switch Source/Header (C/C++)',
+            },
           },
           root_dir = function(fname)
             return require('lspconfig.util').root_pattern(
@@ -517,7 +521,7 @@ require('lazy').setup({
             'clangd',
             '--background-index',
             '--clang-tidy',
-            '--header-insertion=iwyu',
+            '--header-insertion=never',
             '--completion-style=detailed',
             '--function-arg-placeholders',
             '--fallback-style=llvm',
@@ -595,6 +599,19 @@ require('lazy').setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for tsserver)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            -- Preserve any existing on_attach
+            local original_on_attach = server.on_attach
+
+            server.on_attach = function(client, bufnr)
+              if original_on_attach then
+                original_on_attach(client, bufnr)
+              end
+
+              -- Apply keymaps
+              for _, key in ipairs(server.keys or {}) do
+                vim.keymap.set('n', key[1], key[2], { buffer = bufnr, desc = key.desc })
+              end
+            end
             require('lspconfig')[server_name].setup(server)
           end,
         },
