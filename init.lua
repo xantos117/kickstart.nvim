@@ -133,6 +133,8 @@ vim.keymap.set('n', '<leader>y', '"+y')
 vim.keymap.set('v', '<leader>y', '"+y')
 vim.keymap.set('n', '<leader>Y', '"+Y')
 
+vim.keymap.set('n', '<leader><C-k>', vim.lsp.buf.signature_help, { desc = 'Pop-up signature help' })
+
 vim.keymap.set('n', '<leader>f', function()
   vim.lsp.buf.format()
 end)
