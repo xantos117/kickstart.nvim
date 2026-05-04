@@ -520,7 +520,7 @@ require('lazy').setup({
           cmd = {
             'clangd',
             '--background-index',
-            '--clang-tidy',
+            -- '--clang-tidy',
             '--header-insertion=never',
             '--completion-style=detailed',
             '--function-arg-placeholders',
@@ -639,6 +639,9 @@ require('lazy').setup({
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
         local disable_filetypes = { c = true, cpp = true }
+        if disable_filetypes[vim.bo[bufnr].filetype] then
+          return nil -- completely disable format-on-save
+        end
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -794,7 +797,7 @@ require('lazy').setup({
       -- Optionally configure and load the colorscheme
       -- directly inside the plugin declaration.
       vim.g.gruvbox_material_enable_italic = 0
-      vim.g.gruvbox_material_transparent_background = 1
+      vim.g.gruvbox_material_transparent_background = 0
       vim.g.gruvbox_material_background = 'hard'
       vim.g.gruvbox_material_disable_italic_comment = 1
     end,
