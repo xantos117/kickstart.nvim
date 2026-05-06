@@ -191,7 +191,7 @@ require('lazy').setup({
   { 'kalvinpearce/ShaderHighlight', opts = {}, config = function() end },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  -- { 'numToStr/Comment.nvim', opts = {} },
 
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
@@ -494,13 +494,13 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {
-          keys = {
-            {
-              '<leader>ch',
-              '<cmd>ClangdSwitchSourceHeader<CR>',
-              desc = 'Switch Source/Header (C/C++)',
-            },
-          },
+          -- keys = {
+          --   {
+          --     '<leader>ch',
+          --     '<cmd>ClangdSwitchSourceHeader<CR>',
+          --     desc = 'Switch Source/Header (C/C++)',
+          --   },
+          -- },
           root_dir = function(fname)
             return require('lspconfig.util').root_pattern(
               'Makefile',
@@ -535,9 +535,10 @@ require('lazy').setup({
           },
           setup = {
             clangd = function(_, opts)
-              local clangd_ext_opts = vim.opts.Lazy 'clangd_extensions.nvim'
-              require('clangd_extensions').setup(vim.tbl_deep_extend('force', clangd_ext_opts or {}, { server = opts }))
-              return false
+              require('clangd_extensions').setup {
+                server = opts,
+              }
+              return true
             end,
           },
         },
@@ -659,6 +660,18 @@ require('lazy').setup({
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         -- javascript = { { "prettierd", "prettier" } },
+      },
+    },
+  },
+  {
+    'p00f/clangd_extensions.nvim',
+    keys = {
+      {
+        '<leader>ch',
+        function()
+          require('clangd_extensions.switch_source_header').switch_source_header()
+        end,
+        desc = 'Switch Source/Header (C/C++)',
       },
     },
   },
@@ -799,7 +812,7 @@ require('lazy').setup({
       -- Optionally configure and load the colorscheme
       -- directly inside the plugin declaration.
       vim.g.gruvbox_material_enable_italic = 0
-      vim.g.gruvbox_material_transparent_background = 0
+      vim.g.gruvbox_material_transparent_background = 1
       vim.g.gruvbox_material_background = 'hard'
       vim.g.gruvbox_material_disable_italic_comment = 1
     end,
@@ -856,36 +869,36 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
-  { -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    opts = {
-      ensure_installed = { 'bash', 'c', 'cpp', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
-      -- Autoinstall languages that are not installed
-      auto_install = true,
-      highlight = {
-        enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
-      },
-      indent = { enable = true, disable = { 'ruby' } },
-    },
-    config = function(_, opts)
-      -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-      ---@diagnostic disable-next-line: missing-fields
-      require('nvim-treesitter.configs').setup(opts)
-
-      -- There are additional nvim-treesitter modules that you can use to interact
-      -- with nvim-treesitter. You should go explore a few and see what interests you:
-      --
-      --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-      --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-      --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-    end,
-  },
+  -- { -- Highlight, edit, and navigate code
+  --   'nvim-treesitter/nvim-treesitter',
+  --   build = ':TSUpdate',
+  --   opts = {
+  --     ensure_installed = { 'bash', 'c', 'cpp', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+  --     -- Autoinstall languages that are not installed
+  --     auto_install = true,
+  --     highlight = {
+  --       enable = true,
+  --       -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
+  --       --  If you are experiencing weird indenting issues, add the language to
+  --       --  the list of additional_vim_regex_highlighting and disabled languages for indent.
+  --       additional_vim_regex_highlighting = { 'ruby' },
+  --     },
+  --     indent = { enable = true, disable = { 'ruby' } },
+  --   },
+  --   config = function(_, opts)
+  --     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+  --
+  --     ---@diagnostic disable-next-line: missing-fields
+  --     require('nvim-treesitter.configs').setup(opts)
+  --
+  --     -- There are additional nvim-treesitter modules that you can use to interact
+  --     -- with nvim-treesitter. You should go explore a few and see what interests you:
+  --     --
+  --     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
+  --     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
+  --     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  --   end,
+  -- },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
